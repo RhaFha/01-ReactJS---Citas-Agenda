@@ -3,14 +3,14 @@ import Swal from 'sweetalert2';
 import { PacienteType, PacienteInit } from "../class/PacienteClass";
 import Error from "./Error";
 
-const Formulario: React.FC<IPropsFormulario> = ({pacientes, handleAddPaciente, pacientePrincipal}) => {
+const Formulario: React.FC<IPropsFormulario> = ({pacientes, handleAddPaciente /*, pacientePrincipal*/}) => {
 
     const [ paciente, setPaciente] = useState<PacienteType>(PacienteInit);
     const [error, setError] = useState<boolean>(false);
 
-    if(pacientePrincipal.id){
-        setPaciente(pacientePrincipal)
-    }
+    // if(pacientePrincipal.id){
+    //     setPaciente(pacientePrincipal)
+    // }
 
     const handleSubmit = (e: FormEvent ) => {
         e.preventDefault();
@@ -123,5 +123,5 @@ export interface IPropsFormulario{
     //setPacientes: React.Dispatch<React.SetStateAction<PacienteType[]>>
     pacientes: PacienteType[]
     handleAddPaciente: (paciente: PacienteType) => void
-    pacientePrincipal: PacienteType
+    //pacientePrincipal: PacienteType
 }

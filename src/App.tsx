@@ -7,7 +7,7 @@ import { useState, useEffect } from "react";
 function App() {
 
   const [ pacientes, setPacientes ] = useState<PacienteType[]>([]);
-  const [paciente, setPaciente] = useState<PacienteType>(PacienteInit);
+  const [paciente, setPaciente] = useState<PacienteType>(PacienteInit);console.log(paciente)
 
   const handleAddPaciente = (paciente: PacienteType): void => {
     setPacientes([...pacientes, paciente]);
@@ -20,7 +20,7 @@ function App() {
         <Formulario 
           pacientes={pacientes}
           handleAddPaciente={handleAddPaciente}
-          pacientePrincipal={paciente}
+          //pacientePrincipal={paciente}
         />
         <ListadoPaciente 
           pacientes={pacientes}
