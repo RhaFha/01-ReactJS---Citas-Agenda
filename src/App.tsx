@@ -7,10 +7,20 @@ import { useState, useEffect } from "react";
 function App() {
 
   const [ pacientes, setPacientes ] = useState<PacienteType[]>([]);
-  const [paciente, setPaciente] = useState<PacienteType>(PacienteInit);console.log(paciente)
+  const [paciente, setPaciente] = useState<PacienteType>(PacienteInit);
 
   const handleAddPaciente = (paciente: PacienteType): void => {
     setPacientes([...pacientes, paciente]);
+  }
+
+  const handleEditarPaciente = (paciente: PacienteType): void => {
+      const pacienteActualizado = pacientes.map( p => {
+        if(paciente.id === p.id) return paciente;
+
+        return p;
+      })
+
+      setPacientes([...pacienteActualizado]);
   }
 
   return (
@@ -20,7 +30,9 @@ function App() {
         <Formulario 
           pacientes={pacientes}
           handleAddPaciente={handleAddPaciente}
-          //pacientePrincipal={paciente}
+          pacientePrincipal={paciente}
+          handleEditarPaciente={handleEditarPaciente}
+          setPacientePrincipal={setPaciente}
         />
         <ListadoPaciente 
           pacientes={pacientes}

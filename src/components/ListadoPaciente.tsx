@@ -7,7 +7,7 @@ const ListadoPaciente: React.FC<IPropsListadoPaciente> = ({pacientes, setPacient
             <h1 className="font-black text-3xl text-center">Listado paciente</h1>
 
             <p className="text-center text-xl mb-10 mt-5">
-                Administra tus <span className="text-indigo-600 font-bold"> Pacinetes y Citas</span>
+                Administra tus <span className="text-indigo-600 font-bold"> Pacientes y Citas</span>
             </p>
             
             {

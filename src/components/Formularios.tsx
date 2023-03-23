@@ -3,14 +3,13 @@ import Swal from 'sweetalert2';
 import { PacienteType, PacienteInit } from "../class/PacienteClass";
 import Error from "./Error";
 
-const Formulario: React.FC<IPropsFormulario> = ({pacientes, handleAddPaciente /*, pacientePrincipal*/}) => {
-
+const Formulario: React.FC<IPropsFormulario> = ({pacientes, handleAddPaciente , pacientePrincipal, handleEditarPaciente, setPacientePrincipal}) => {
     const [ paciente, setPaciente] = useState<PacienteType>(PacienteInit);
     const [error, setError] = useState<boolean>(false);
 
-    // if(pacientePrincipal.id){
-    //     setPaciente(pacientePrincipal)
-    // }
+    useEffect( () => {
+            setPaciente(pacientePrincipal);
+    }, [handleEditarPaciente])
 
     const handleSubmit = (e: FormEvent ) => {
         e.preventDefault();
@@ -23,8 +22,26 @@ const Formulario: React.FC<IPropsFormulario> = ({pacientes, handleAddPaciente /*
             return;
         }
 
+        if(paciente.id){
+            handleEditarPaciente({...paciente});
+            setPacientePrincipal(PacienteInit)
+
+            Swal.fire({
+                position: 'center',
+                icon: 'success',
+                title: 'Se guardo correctamente',
+                showConfirmButton: false,
+                timer: 1500
+            })
+    
+            setError(false)
+
+            return;
+
+        }
+
         handleAddPaciente({ id: Date.now().toString(36) + Math.random().toString(36).substring(2), ...paciente});
-        setPaciente(PacienteInit);
+        setPacientePrincipal(PacienteInit);
 
         Swal.fire({
             position: 'center',
@@ -123,5 +140,7 @@ export interface IPropsFormulario{
     //setPacientes: React.Dispatch<React.SetStateAction<PacienteType[]>>
     pacientes: PacienteType[]
     handleAddPaciente: (paciente: PacienteType) => void
-    //pacientePrincipal: PacienteType
+    pacientePrincipal: PacienteType
+    handleEditarPaciente: (paciente: PacienteType) => void
+    setPacientePrincipal: React.Dispatch<React.SetStateAction<PacienteType>>
 }
