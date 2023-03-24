@@ -9,16 +9,6 @@ function App() {
   const [ pacientes, setPacientes ] = useState<PacienteType[]>([]);
   const [paciente, setPaciente] = useState<PacienteType>(PacienteInit);
 
-  useEffect( () => {
-    if(pacientes.length === 0 && localStorage.getItem('pacientes') !== null){
-        const storedPacientes = JSON.parse(localStorage.getItem('pacientes') as string) as PacienteType[];
-        setPacientes(storedPacientes)
-        return;
-      }
-      
-      localStorage.setItem('pacientes', JSON.stringify(pacientes))
-  }, [pacientes])
-
   const handleAddPaciente = (paciente: PacienteType): void => {
     setPacientes([...pacientes, paciente]);
   }
@@ -26,7 +16,7 @@ function App() {
   const handleEliminarPaciente = (pacienteAEliminar: PacienteType): void => {
     const pacienteEliminado = pacientes.filter( p => {
       if(pacienteAEliminar.id !== p.id) return p;
-    });
+    });console.log(pacienteEliminado)
 
     if(paciente.id && paciente.id === pacienteAEliminar.id) {setPaciente({...PacienteInit})};
 
@@ -43,6 +33,19 @@ function App() {
       
       setPacientes([...pacienteActualizado]);
   }
+
+  useEffect( () => {
+    const obtenerPacientes = () => {
+      const pacientes = JSON.parse(localStorage.getItem('pacientes') as string) as PacienteType[] ?? [];
+      setPacientes(pacientes);
+    }
+
+    obtenerPacientes();
+  }, [])
+
+  useEffect( () => {  
+      localStorage.setItem('pacientes', JSON.stringify(pacientes))
+  }, [pacientes])
 
   return (
     <div className="container mx-auto">

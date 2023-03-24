@@ -2,6 +2,8 @@ import { PacienteType } from "../class/PacienteClass";
 import Paciente from "./Paciente";
 
 const ListadoPaciente: React.FC<IPropsListadoPaciente> = ({pacientes, setPaciente, handleEliminarPaciente}) => {
+
+    
     return (
         <div className="md:w-1/2 lg:w-3/5 md:h-screen overflow-y-auto">
             <h1 className="font-black text-3xl text-center">Listado paciente</h1>
