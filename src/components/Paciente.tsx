@@ -1,11 +1,36 @@
 import { PacienteType } from "../class/PacienteClass";
+import Swal from 'sweetalert2';
 
-const Paciente: React.FC<IPropsPaciente> = ({paciente, setPaciente}) => {
+const Paciente: React.FC<IPropsPaciente> = ({paciente, setPaciente, handleEliminarPaciente }) => {
 
     const { id, mascota, propietario, email, alta, sintomas } = paciente
 
-    const handleEditar = () => {
+    const handleEditar = () => { 
         setPaciente({...paciente});
+    }
+
+    const handleEliminar = () => {
+        Swal.fire({
+            title: '¿Estas seguro?',
+            text: "Estas tratando de eliminar un cita!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, delete it!'
+          }).then((result) => {
+            if (result.isConfirmed) {
+
+                handleEliminarPaciente({...paciente});
+                
+                Swal.fire(
+                    'Deleted!',
+                    'Your file has been deleted.',
+                    'success'
+                )
+            }
+          })
+        
     }
 
     return ( 
@@ -21,7 +46,11 @@ const Paciente: React.FC<IPropsPaciente> = ({paciente, setPaciente}) => {
                     className="px-10 py-1 bg-indigo-600 hover:bg-indigo-700 text-white uppercase rounded mr-2"
                     onClick={handleEditar}
                 >Editar</button>
-                <button type="button" className="px-10 py-1 bg-red-600 hover:bg-red-700 text-white uppercase rounded">Eliminar</button>
+                <button 
+                    type="button" 
+                    className="px-10 py-1 bg-red-600 hover:bg-red-700 text-white uppercase rounded"
+                    onClick={handleEliminar}
+                >Eliminar</button>
             </div>
         </div>
      );
@@ -32,4 +61,5 @@ export default Paciente;
 interface IPropsPaciente{
     paciente: PacienteType
     setPaciente: React.Dispatch<React.SetStateAction<PacienteType>>
+    handleEliminarPaciente: (paciente: PacienteType) => void
 }

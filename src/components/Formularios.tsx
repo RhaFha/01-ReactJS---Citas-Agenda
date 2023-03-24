@@ -9,7 +9,7 @@ const Formulario: React.FC<IPropsFormulario> = ({pacientes, handleAddPaciente , 
 
     useEffect( () => {
             setPaciente(pacientePrincipal);
-    }, [handleEditarPaciente])
+    }, [pacientePrincipal])
 
     const handleSubmit = (e: FormEvent ) => {
         e.preventDefault();
@@ -29,7 +29,7 @@ const Formulario: React.FC<IPropsFormulario> = ({pacientes, handleAddPaciente , 
             Swal.fire({
                 position: 'center',
                 icon: 'success',
-                title: 'Se guardo correctamente',
+                title: 'Se Actualizo Correctamente',
                 showConfirmButton: false,
                 timer: 1500
             })
@@ -41,7 +41,7 @@ const Formulario: React.FC<IPropsFormulario> = ({pacientes, handleAddPaciente , 
         }
 
         handleAddPaciente({ id: Date.now().toString(36) + Math.random().toString(36).substring(2), ...paciente});
-        setPacientePrincipal(PacienteInit);
+        setPacientePrincipal({...PacienteInit});
 
         Swal.fire({
             position: 'center',

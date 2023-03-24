@@ -9,8 +9,29 @@ function App() {
   const [ pacientes, setPacientes ] = useState<PacienteType[]>([]);
   const [paciente, setPaciente] = useState<PacienteType>(PacienteInit);
 
+  useEffect( () => {
+    if(pacientes.length === 0 && localStorage.getItem('pacientes') !== null){
+        const storedPacientes = JSON.parse(localStorage.getItem('pacientes') as string) as PacienteType[];
+        setPacientes(storedPacientes)
+        return;
+      }
+      
+      localStorage.setItem('pacientes', JSON.stringify(pacientes))
+  }, [pacientes])
+
   const handleAddPaciente = (paciente: PacienteType): void => {
     setPacientes([...pacientes, paciente]);
+  }
+
+  const handleEliminarPaciente = (pacienteAEliminar: PacienteType): void => {
+    const pacienteEliminado = pacientes.filter( p => {
+      if(pacienteAEliminar.id !== p.id) return p;
+    });
+
+    if(paciente.id && paciente.id === pacienteAEliminar.id) {setPaciente({...PacienteInit})};
+
+    setPacientes(pacienteEliminado);
+
   }
 
   const handleEditarPaciente = (paciente: PacienteType): void => {
@@ -18,8 +39,8 @@ function App() {
         if(paciente.id === p.id) return paciente;
 
         return p;
-      })
-
+      });
+      
       setPacientes([...pacienteActualizado]);
   }
 
@@ -37,6 +58,7 @@ function App() {
         <ListadoPaciente 
           pacientes={pacientes}
           setPaciente={setPaciente}
+          handleEliminarPaciente={handleEliminarPaciente}
         />
       </div>
     </div>
